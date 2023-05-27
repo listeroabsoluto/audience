@@ -1,5 +1,6 @@
 package com.listeroabsoluto.audience.controller;
 
+import com.listeroabsoluto.audience.model.Audience;
 import com.listeroabsoluto.audience.service.AudienceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.verify;
@@ -26,8 +28,14 @@ class AudienceControllerIntegrationTest {
     private AudienceService audienceService;
 
     @Test
-    void shouldGetDefaultAudiences() throws Exception {
-        when(audienceService.getAudiencesByType("default")).thenReturn(List.of("1", "2", "3"));
+    void shouldGetAudiences() throws Exception {
+        when(audienceService.getAudiences()).thenReturn(
+                List.of(
+                    new Audience("1"),
+                    new Audience("2"),
+                    new Audience("3")
+                )
+        );
 
         mockMvc.perform(get("/"))
                 .andDo(print())
@@ -35,19 +43,7 @@ class AudienceControllerIntegrationTest {
                 .andExpect(content().string(equalTo("[1, 2, 3]")))
         ;
 
-        verify(audienceService).getAudiencesByType("default");
+        verify(audienceService).getAudiences();
     }
 
-    @Test
-    void shouldGetEmptyAudiences() throws Exception {
-        when(audienceService.getAudiencesByType("default")).thenReturn(List.of());
-
-        mockMvc.perform(get("/?type=empty"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[]")))
-        ;
-
-        verify(audienceService).getAudiencesByType("empty");
-    }
 }

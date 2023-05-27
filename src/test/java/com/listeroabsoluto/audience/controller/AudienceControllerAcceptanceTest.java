@@ -24,7 +24,7 @@ class AudienceControllerAcceptanceTest {
     private MockMvc mockMvc;
 
     @Test
-    void shouldGetDefaultAudiences() throws Exception {
+    void shouldGetAudiences() throws Exception {
         mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -33,11 +33,11 @@ class AudienceControllerAcceptanceTest {
     }
 
     @Test
-    void shouldGetEmptyAudiences() throws Exception {
-        mockMvc.perform(get("/?type=empty"))
+    void shouldGetUserAudiences() throws Exception {
+        mockMvc.perform(get("/user/123"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[]")))
+                .andExpect(content().string(equalTo("[1, 2, 3]")))
         ;
     }
 }
