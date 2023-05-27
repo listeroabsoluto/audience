@@ -8,21 +8,18 @@ import java.util.*;
 @Service
 public class AudienceService {
 
-    private final List<Audience> audiences;
+    private List<Audience> audiences;
 
     public AudienceService() {
-        Audience e1 = new Audience("1");
-        e1.addUser("123");
-        Audience e2 = new Audience("2");
-        e2.addUser("123");
-        Audience e3 = new Audience("3");
-        e3.addUser("123");
-        audiences = List.of(e1, e2, e3);
+        audiences = List.of();
+    }
+
+    public void setAudiences(List<Audience> audiences) {
+        this.audiences = audiences;
     }
 
     public List<Audience> getAudiences() {
         return audiences;
-
     }
 
     public List<Audience> getAudiencesByUser(String userId) {

@@ -6,7 +6,7 @@ import java.util.Set;
 public class Audience {
     private String name;
 
-    private Set<User> users;
+    private final Set<User> users;
 
     public Audience(String name) {
         this.name = name;

@@ -7,11 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-
 import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -30,7 +26,7 @@ class AudienceControllerAcceptanceTest {
         mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[1, 2, 3]")))
+                .andExpect(content().string(equalTo("[]")))
         ;
     }
 
@@ -39,21 +35,21 @@ class AudienceControllerAcceptanceTest {
         mockMvc.perform(get("/user/123"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[1, 2, 3]")))
+                .andExpect(content().string(equalTo("[]")))
         ;
     }
 
     @Test
     void shouldAddUserToAudiences() throws Exception {
         mockMvc.perform(
-                post("/user/789")
-                        .content("{\"audiences\":[\"1\",\"2\"]}")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON)
+                        post("/user/789")
+                                .content("{\"audiences\":[\"1\",\"2\"]}")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[1, 2]")))
+                .andExpect(content().string(equalTo("[]")))
         ;
     }
 }
