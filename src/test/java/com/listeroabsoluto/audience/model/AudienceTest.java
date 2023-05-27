@@ -53,4 +53,13 @@ class AudienceTest {
 
         assertEquals("name", audience.toString());
     }
+
+    @Test
+    void testNoDuplicateUsers() {
+        Audience audience = new Audience("name");
+        audience.addUser("1");
+        assertEquals(1, audience.getUsers().size());
+        audience.addUser("1");
+        assertEquals(1, audience.getUsers().size());
+    }
 }

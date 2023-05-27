@@ -27,6 +27,9 @@ public class Audience {
     }
 
     public void addUser(String id) {
+        if (this.containsUser(id)) {
+            return;
+        }
         users.add(new User(id));
     }
 
