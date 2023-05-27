@@ -2,6 +2,7 @@ package com.listeroabsoluto.audience.service;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,7 +24,7 @@ class AudienceServiceTest {
     @Test
     void addUserToAudiences() {
         AudienceService service = new AudienceService();
-        service.addUserToAudiences("456", service.getAudiences());
+        service.addUserToAudiences("456", List.of("1", "2", "3"));
         assertEquals(3, service.getAudiencesByUser("456").size());
     }
 }

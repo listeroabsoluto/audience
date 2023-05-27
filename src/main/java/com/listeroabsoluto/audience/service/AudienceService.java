@@ -35,9 +35,11 @@ public class AudienceService {
         return result;
     }
 
-    public void addUserToAudiences(String userId, List<Audience> audiences) {
-        for (Audience audience : audiences) {
-            audience.addUser(userId);
+    public void addUserToAudiences(String userId, List<String> audiences) {
+        for (Audience audience : this.audiences) {
+            if (audiences.contains(audience.getName())) {
+                audience.addUser(userId);
+            }
         }
     }
 }

@@ -34,12 +34,7 @@ public class AudienceController {
     @PostMapping(path = "/user/{id}")
     public String addUserToAudiences(@PathVariable(name = "id") String userId, @RequestBody RBody body)
     {
-        List<Audience> audiences = new ArrayList<>();
-        for (String name : body.audiences) {
-            audiences.add(new Audience(name));
-        }
-
-        audienceService.addUserToAudiences(userId, audiences);
+        audienceService.addUserToAudiences(userId, body.audiences);
 
         return audienceService.getAudiencesByUser(userId).toString();
     }
