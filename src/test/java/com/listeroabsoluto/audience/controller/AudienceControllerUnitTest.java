@@ -16,9 +16,10 @@ class AudienceControllerUnitTest {
     @Test
     void shouldGetDefaultAudiences() {
         AudienceService audienceService = Mockito.mock(AudienceService.class);
-        when(audienceService.getAudiences()).thenReturn(List.of(new Audience("1"), new Audience("2"), new Audience("3")));
+        List<Audience> audienceList = List.of(new Audience("1"), new Audience("2"), new Audience("3"));
+        when(audienceService.getAudiences()).thenReturn(audienceList);
         AudienceController audienceController = new AudienceController(audienceService);
-        assertEquals("[1, 2, 3]", audienceController.getAudiences());
+        assertEquals(audienceList, audienceController.getAudiences());
     }
 
 }

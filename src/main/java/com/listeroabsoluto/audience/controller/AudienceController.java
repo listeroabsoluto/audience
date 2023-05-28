@@ -1,8 +1,11 @@
 package com.listeroabsoluto.audience.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.listeroabsoluto.audience.model.Audience;
 import com.listeroabsoluto.audience.service.AudienceService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,23 +18,28 @@ public class AudienceController {
     }
 
     @GetMapping(path = "/")
-    public String getAudiences() {
-        return audienceService.getAudiences().toString();
+    @JsonView(Audience.View.ExtendedPublic.class)
+    public List<Audience> getAudiences() {
+        return audienceService.getAudiences();
     }
 
-    @GetMapping(path = "/user/{id}")
-    public String getAudiencesByUser(@PathVariable(name = "id") String userId) {
-        return audienceService.getAudiencesByUser(userId).toString();
+    @GetMapping(path = "/{name}")
+    @JsonView(Audience.View.Internal.class)
+    public Audience getAudienceByName(@PathVariable String name) {
+        return audienceService.getOneByName(name);
     }
 
-    @PostMapping(path = "/user/{id}")
-    public String addUserToAudiences(@PathVariable(name = "id") String userId, @RequestBody RBody body) {
-        audienceService.addUserToAudiences(userId, body.audiences);
+    @PostMapping(path = "/{name}")
+    @JsonView(Audience.View.Public.class)
+    public Audience createAudience(@PathVariable String name) {
+        audienceService.saveOrUpdate(new Audience(name));
 
-        return audienceService.getAudiencesByUser(userId).toString();
+        return audienceService.getOneByName(name);
     }
 
-    static class RBody {
-        public List<String> audiences;
+    @DeleteMapping(path = "/{name}")
+    @JsonView(Audience.View.Public.class)
+    public void deleteAudience(@PathVariable String name) {
+        audienceService.delete(name);
     }
 }

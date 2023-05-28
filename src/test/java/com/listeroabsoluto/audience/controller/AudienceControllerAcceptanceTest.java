@@ -2,9 +2,11 @@ package com.listeroabsoluto.audience.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -16,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class AudienceControllerAcceptanceTest {
 
     @Autowired
@@ -43,7 +46,7 @@ class AudienceControllerAcceptanceTest {
     void shouldAddUserToAudiences() throws Exception {
         mockMvc.perform(
                         post("/user/789")
-                                .content("{\"audiences\":[\"1\",\"2\"]}")
+                                .content("[\"1\",\"2\"]")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )

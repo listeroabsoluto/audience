@@ -40,7 +40,7 @@ class AudienceControllerIntegrationTest {
         mockMvc.perform(get("/"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string(equalTo("[1, 2, 3]")))
+                .andExpect(content().string(equalTo("[{\"name\":\"1\",\"active\":true},{\"name\":\"2\",\"active\":true},{\"name\":\"3\",\"active\":true}]")))
         ;
 
         verify(audienceService).getAudiences();
